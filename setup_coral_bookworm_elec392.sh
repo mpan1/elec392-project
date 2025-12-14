@@ -62,7 +62,7 @@ EOF
 # ---------------------- Configuration -----------------------
 PYTHON_VERSION="3.9.20"
 PROJECT_DIR="${HOME}/dev/coral"
-DO_UPGRADE=/
+DO_UPGRADE=1
 
 # ---------------------- Helpers ------------------------------
 log()  { printf "\n\033[1;32m==>\033[0m %s\n" "$*"; }
@@ -89,6 +89,8 @@ log "Updating system packages"
 sudo apt update -y
 if [[ "$DO_UPGRADE" -eq 1 ]]; then
   sudo apt full-upgrade -y
+else 
+  sudo apt upgrade -y
 fi
 
 # ---------------------- Build deps ---------------------------
@@ -185,8 +187,9 @@ cd ..
 
 log "Cloning ELEC392 Coral Starter Kit"
 git clone https://github.com/mpan1/elec392-coral-starter-kit.git || true
-#cd coral-startup-kit
-
+cd coral-startup-kit
+pip install pip install -e .
+cd ..
 
 # ---------------------- Done --------------------------------
 echo
