@@ -7,7 +7,6 @@
 This repository implements a **modern digital engineering logbook** specifically designed for ELEC-392 course projects. It replaces traditional paper logbooks with a structured, version-controlled system that makes documentation easier for students and grading simpler for TAs.
 
 ### Why This System?
-
 - 📝 Document technical work and decisions
 - 🧠 Reflect on learning and challenges
 - 📊 Track time investment and progress
@@ -43,7 +42,7 @@ This logbook uses a **hybrid approach**:
 - Implementation details
 
 ### 2. 🎫 GitHub Issues
-**Purpose**: Reflections, learning outcomes, and grading submissions
+**Purpose**: Reflections
 
 - Weekly reflection issues using templates
 - Track challenges, solutions, and learning
@@ -85,25 +84,6 @@ This logbook uses a **hybrid approach**:
 - Progress photos
 - Diagrams and flowcharts
 - Any image referenced in logbook entries
-
-### 5. 💻 Code (`/code`)
-
-**Purpose**: Source code, scripts, and programs for your project
-
-- Arduino/C++ sketches for microcontrollers
-- Python scripts for data analysis
-- MATLAB code for simulations
-- Custom libraries and utilities
-- Organized by week: `code/week-01/`, `code/week-02/`, etc.
-- See [code/README.md](code/README.md) for organization guidelines and best practices
-
-**Best for**:
-
-- Microcontroller firmware and embedded code
-- Data processing and analysis scripts
-- Simulation and modeling code
-- Testing and validation programs
-- Any code referenced in logbook entries
 
 ---
 
@@ -155,66 +135,74 @@ This logbook uses a **hybrid approach**:
    - Choose the appropriate column (e.g., "To Do")
 
 #### 3. Creating Daily Logbook Entries
+**Templates Available**
 
-**Option A: Using the Template (Recommended)**
+The `logbook/.templates/` folder contains several logbook templates to suit different documentation needs:
+
+- **`detailed_work_log_template.md`** - Comprehensive template for technical work with objectives, calculations, and results
+- **`team_contributions_template.md`** - Track individual contributions when multiple team members work on the same day
+- **`meeting_minutes_template.md`** - Document team meetings, decisions, and action items
+
+**📌 Important: Flexibility in Documentation Style**
+
+While we provide these templates as starting points, **your logbook organization method is flexible**. Teams should choose or adapt formats that work best for their workflow and project needs. The key requirements are:
+
+✅ **Sufficient detail** - Entries should be thorough enough for reproduction and understanding
+✅ **Clear organization** - Use consistent structure and naming conventions
+✅ **Required metadata** - Include date, hours, status, and relevant tags
+✅ **Regular updates** - Document work as it happens, not retroactively
+
+You may:
+- Use one template exclusively
+- Mix templates based on activity type
+- Create your own format that meets the requirements
+- Adapt templates to better fit your team's style
+
+**Option A: Using a Template (Recommended for Getting Started)**
 
 1. Navigate to `logbook/.templates/` folder:
    - Click on the **"logbook"** folder in your repository
    - Click on **".templates"**
-   - Click on **"daily-entry-template.md"**
+   - Choose the template that best fits your needs
 
 2. Copy the template:
    - Click the **"Raw"** button at the top right of the file view
    - Press **Ctrl+A** (Windows/Linux) or **Cmd+A** (Mac) to select all, then **Ctrl+C** (Windows/Linux) or **Cmd+C** (Mac) to copy
-3. Create your daily entry:
+
+3. Create your entry:
    - Navigate back to the appropriate week folder (e.g., `logbook/week-01/`)
    - Click **"Add file"** → **"Create new file"**
    - Name it using the format: `YYYY-MM-DD_brief-description.md`
      - Example: `2025-01-15_circuit-testing.md`
-   - Paste the template content using **Ctrl+V** (Windows/Linux) or **Cmd+V** (Mac)   - Fill in all sections:
-     - **Metadata** (date, hours worked, status)
-     - **Work Description** (what you did)
-     - **Challenges & Solutions**
-     - **References** (any resources used)
+   - Paste the template content using **Ctrl+V** (Windows/Linux) or **Cmd+V** (Mac)
+   - Fill in all sections with your work details
    - Scroll down and click **"Commit new file"**
 
-**Option B: Quick Entry Without Template**
+**Option B: Custom Entry Format**
 
 1. In your week folder, click **"Add file"** → **"Create new file"**
 2. Name: `YYYY-MM-DD_description.md`
-3. Write your entry with these minimum sections:
-```markdown
----
-date: YYYY-MM-DD
-hours: X.X
-status: in-progress | completed
----
-
-# Brief Description
-
-## Work Done
-- Detail what you accomplished
-
-## Challenges
-- Problems encountered and solutions
-```
-4. Commit the file
+3. Write your entry ensuring you include:
+   - YAML frontmatter with date, hours, and status
+   - Clear description of work performed
+   - Challenges and solutions
+   - References and relevant images/code
 
 **++Tips++:**
 - Make entries **daily** or after each work session
-- Include **screenshots** using: `![Description](../images/filename.png)`
+- Include **screenshots** using: `![Description](../../images/week-XX/filename.png)`
 - Reference equations: $V = IR$ (inline) or $$V = IR$$ (block)
 - Link related Issues: `Closes #5` or `Related to #3`
 
 #### 4. Weekly Reflections (GitHub Issues)
 
 1. Create a new Issue:
-   - Go to the **"Issues"** tab in your repository
+   - Go to the **"Issues"** tab in your repository in GitHub
    - Click the green **"New issue"** button
 
 2. Fill out the reflection:
    - **Title**: `Week [#] Reflection - [Date Range]`
-     - Example: `Week 3 Reflection - Jan 15-21, 2025`
+     - Example: `Week 3 Reflection`
    - **Body**: Use this template:
 ```markdown
 ## Learning Outcomes
@@ -353,21 +341,15 @@ done
 
 ```
 .
-├── README.md                          # This file - system overview
 ├── logbook/
 │   ├── README.md                      # Logbook guidelines
-│   ├── .templates/
-│   │   └── daily-entry-template.md    # Template for daily entries
+│   ├── .templates/                    # Template for daily entries
 │   ├── week-01/
 │   │   └── 2025-01-08_example-*.md    # Example entries
 │   ├── week-02/
-│   └── week-XX/
-├── scripts/
-│   └── generate_grading_report.py     # TA grading automation script
-├── code/                              # Store source code here
-│   └── README.md                      # Code organization guidelines
+│   ├── week-XX/
+│   └── generate_activity_report.py    # activity summary automation script
 ├── images/                            # Store images here
-│   └── README.md                      # Image usage guidelines
 └── .github/
     └── ISSUE_TEMPLATE/
         └── weekly-reflection.md       # Issue template for reflections
@@ -397,69 +379,6 @@ done
 - Let technical jargon replace clear explanations
 - Plagiarize or fabricate entries
 
-### For TAs
-
-#### Detailed Grading Rubric:
-This rubric provides TAs with clear criteria for assessing student logbooks across four dimensions. Each criterion is evaluated on a 5-point scale (4 = Excellent, 3 = Proficient, 2 = Satisfactory, 1 = Needs Improvement, 0 = Unsatisfactory).
-
-#### 1. Entry Frequency & Consistency (30%)
-
-**Excellent (4):** Demonstrates consistent, regular entries (3+ per week) throughout the entire project period. Entries are made in real-time or within 24 hours of work sessions. Clear timestamps and commit history show authentic, ongoing documentation. No evidence of batch entries or retroactive documentation.
-
-**Proficient (3):** Shows regular entries (2-3 per week) for most of the project period. Most entries appear to be made shortly after work sessions. Minor instances of delayed documentation. Commit history generally supports real-time logging.
-
-**Satisfactory (2):** Provides basic entry frequency (1-2 per week) but with some gaps. Some evidence of batch entries or delayed documentation. Commit history shows irregular patterns with occasional clustering of entries.
-
-**Needs Improvement (1):** Limited entries with significant gaps in documentation. Clear evidence of retroactive or batch-written entries. Commit history shows infrequent, clustered activity suggesting documentation done all at once.
-
-**Unsatisfactory (0):** Minimal or no entries. Entries appear fabricated or entirely retroactive. No meaningful commit history or documentation pattern.
-
----
-
-#### 2. Technical Depth & Documentation Quality (40%)
-
-**Excellent (4):** Provides comprehensive technical documentation including detailed calculations, measurements, circuit diagrams, code snippets, and analysis. All YAML frontmatter fields are complete and accurate. Documentation is sufficient for another engineer to reproduce the work. Includes quantitative data, error analysis, and troubleshooting steps. Images are clear, properly captioned, and directly support the technical content.
-
-**Proficient (3):** Includes good technical documentation with most calculations, measurements, and relevant details. YAML fields are mostly complete with minor omissions. Work can generally be understood and reproduced. Images and diagrams support the documentation. Some minor gaps in detail or analysis.
-
-**Satisfactory (2):** Provides basic technical information but lacks depth in some areas. Calculations or measurements present but incomplete. YAML fields partially filled. Work is documented but may require clarification to reproduce. Images present but may lack proper captioning or context.
-
-**Needs Improvement (1):** Limited technical detail. Sparse or missing calculations, measurements, or analysis. YAML fields mostly incomplete. Documentation too vague to understand or reproduce work. Few or no images, or images without proper context.
-
-**Unsatisfactory (0):** Little to no technical content. Missing critical information. YAML fields blank or incorrect. Documentation insufficient to understand what was done.
-
----
-
-#### 3. Reflection Quality & Learning Insights (20%)
-
-**Excellent (4):** Demonstrates deep reflection on learning through thoughtful weekly Issues. Clearly articulates what was learned, challenges encountered, and problem-solving approaches. Documents failures and mistakes with analysis of why they occurred and what was learned. Shows evidence of critical thinking about design decisions and trade-offs. Connects experiences to broader engineering concepts.
-
-**Proficient (3):** Provides good reflection in weekly Issues. Discusses learning outcomes and challenges with reasonable depth. Documents some failures and problem-solving approaches. Shows understanding of design decisions. Makes some connections to engineering principles.
-
-**Satisfactory (2):** Includes basic reflection but lacks depth. Weekly Issues present but somewhat superficial. Mentions challenges but limited analysis of solutions or learning. Some documentation of failures but minimal interpretation. Limited connection to broader concepts.
-
-**Needs Improvement (1):** Minimal reflection. Weekly Issues are brief or superficial. Little discussion of challenges or learning. Avoids documenting failures. No evidence of critical thinking about design decisions.
-
-**Unsatisfactory (0):** No meaningful reflection. Missing or trivial weekly Issues. No evidence of learning or critical analysis.
-
----
-
-#### 4. Completeness & Professional Standards (10%)
-
-**Excellent (4):** All YAML frontmatter fields consistently filled with accurate information (date, hours, status, tags). File naming follows convention perfectly (`YYYY-MM-DD_descriptive-topic.md`). Markdown formatting is clean and professional. Images properly referenced with relative paths. Weekly reflection Issues created and linked to Project Board. Regular commits with meaningful commit messages. Repository structure follows template exactly.
-
-**Proficient (3):** Most YAML fields complete and accurate with minor omissions. File naming mostly follows convention. Good markdown formatting with occasional inconsistencies. Images generally well-referenced. Most weekly Issues created. Regular commits with decent messages.
-
-**Satisfactory (2):** Basic YAML fields filled but some missing or inaccurate. File naming partially follows convention. Markdown formatting functional but inconsistent. Some images missing references. Some weekly Issues missing. Irregular commits or vague commit messages.
-
-**Needs Improvement (1):** Many YAML fields missing or incorrect. File naming inconsistent or incorrect. Poor markdown formatting. Images improperly referenced or missing. Many weekly Issues missing. Minimal or poor commit practices.
-
-**Unsatisfactory (0):** YAML fields mostly blank. File naming chaotic. Markdown formatting broken. No proper image handling. No weekly Issues. No meaningful version control usage.
-
----
-
-**Grade Calculation:** Each criterion is scored 0-4 and multiplied by its weight (Frequency: 30%, Technical Depth: 40%, Reflection: 20%, Completeness: 10%). Final grade is the weighted sum converted to percentage.
----
 
 ## 🛠️ Technical Features
 
@@ -492,16 +411,13 @@ def calculate_power(voltage, resistance):
 
 ### Automation Scripts
 
-**Grading Report Generator** (`scripts/generate_grading_report.py`):
+**Activity Report Generator** (`generate_activity_report.py`):
 - Scans all logbook entries
 - Validates YAML frontmatter
 - Calculates statistics (entries, hours, weeks)
 - Checks for images and calculations
 - Generates markdown report with grading suggestions
-
 ---
-
-
 
 **Q: Can we write logbook entries as a team?**
 A: Each team member should document their individual contributions. Use the `author` field in YAML frontmatter.
@@ -525,7 +441,7 @@ A: Someone else should be able to reproduce your work from your logbook. Include
 
 ## 📚 Additional Resources
 
-- [ELEC-392 Course GitBook](https://elec392.gitbook.io/elec-392) - Official course documentation and guidelines
+- [ELEC-392 Course GitBook](https://elec392.gitbook.io/elec-392/8Ty9Nx3l84dHok0cVgCY/) - Official course documentation and guidelines
 
 - [Markdown Guide](https://www.markdownguide.org/)
 - [GitHub Issues Documentation](https://docs.github.com/en/issues)

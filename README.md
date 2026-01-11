@@ -1,49 +1,51 @@
 # ELEC 392 - Autonomous Robotic Taxi
 
-A repository for code used in Smith Engineering ELEC 392 design course. This project uses a **Sunfounder PiCar-X** and **Coral USB Accelerator** to develop a robotic taxi capable of operating autonomously in a miniature town populated with rubber duckies.
+A repository for code used in Smith Engineering ELEC 392 design course. This project uses a **Sunfounder PiCar-X** and **Coral USB Accelerator** to develop a robotic taxi capable of operating autonomously in a miniature town populated with rubber duckies (Quackston).
 
 ## Features
 
-- **Hardware Control Libraries**: Complete interface for PiCar-X components including motors, servos, camera, ultrasonic sensor, and line tracking sensors
-- **Autonomous Driving**: Lane following using computer vision and line tracking sensors
-- **Object Detection**: Real-time object detection using Coral USB Accelerator for edge AI inference
-- **Obstacle Avoidance**: Intelligent obstacle detection and avoidance using ultrasonic sensor and camera
+- **Logbook**: Implements a logbook structure for your team to record progress in accordance to ELEC 392 specifications
+- **Utilities**: Provides some basic utilities and to get you started with calibration of your PiCar-X
+- **Setup Scripts**: Bash scripts to help you install dependencies and repos needed to use the PiCar-X and Coral USB Accelerator
 - **Sample Code**: Ready-to-use examples demonstrating all key features
 
 ## Project Structure
 
 ```
-elec392/
-├── picarx/                      # PiCar-X hardware interface libraries
+elec392_project/
+├── examples/                                      # Sample code and demonstrations
+│   ├── 01_move.py                                 # Basic vehicle control example
+│   ├── 02_keyboard_control.py                     # Keyboard vehicle control example
+│   ├── 03_sound.py                                # Robot Hat sound examples (use sudo)
+│   ├── 04_ultrasonic_obstacle_avoidance.py        # Obstacle avoidance example using ultrasonic sensor
+│   └── 05_line_following.py                       # Line following demonstration
+├── images/                                        # Folder for project images referenced by logbook
+├── logbook/                                       # Folder for log entries 
+│   ├── .templates
+│   │   └── daily-entry-template.md                # Log entry template
+│   ├── week-01/                                   
+│   │   └── 2025-01-08_example-circuit-design.md   # Example log entry
+│   ├── ...                                        
+│   ├── week-12/
+│   ├── generate_activity_report.py                # Auto-grader for logbook entries                                  
+│   └── README.md                                  # Logbook instructions
+├── images/                                        # Sound files (.mp3, .wav)
+├── src/                                           # Where your code should go
+├── utils/                                         # Autonomous driving utilities
 │   ├── __init__.py
-│   ├── picarx.py                # Main PiCar-X controller class
-│   ├── motor.py                 # DC motor control
-│   ├── servo.py                 # Servo control (steering, camera)
-│   ├── camera.py                # Camera interface
-│   ├── ultrasonic.py            # Ultrasonic distance sensor
-│   └── grayscale.py             # Line tracking sensors
-├── utils/                       # Autonomous driving utilities
-│   ├── autonomous_controller.py # Main autonomous driving controller
-│   ├── lane_following.py        # Lane detection and following
-│   ├── object_detection.py      # Object detection using Coral
-│   └── obstacle_avoidance.py    # Obstacle detection and avoidance
-├── examples/                    # Sample code and demonstrations
-│   ├── basic_control.py         # Basic vehicle control example
-│   ├── lane_following_demo.py   # Lane following demonstration
-│   ├── object_detection_demo.py # Object detection demonstration
-│   └── autonomous_taxi_demo.py  # Full autonomous taxi demo
-├── models/                      # AI models for object detection
-│   └── (Place TFLite models here)
-├── tutorials/
-│   ├──road_sign_detector        # Training Road Sign Detector (Colab)
-│   └──salad_detector            # Training Salad Detector (Colab)
-└── requirements.txt             # Python dependencies
+│   ├── actuator_calibration.py                    # Motor and servo calibration
+│   ├── grayscale_calibration.py                   # Grayscale (line follower) sensor calibration
+│   └── servo_zeroing.py                           # Script to zero servos
+├── README.md                                      # This file
+├── setup_coral.sh                                 # Bash script to install coral repos 
+├── setup_picarx.sh                                # Bash script to isntall picar-x repos and dependencies
+└── requirements.txt                               # Python dependencies
 ```
 
 ## Hardware Requirements
 
 - Sunfounder PiCar-X robot car
-- Raspberry Pi 4B (recommended)
+- Raspberry Pi 4B
 - Coral USB Accelerator
 - Camera module (Pi Camera or compatible)
 - Ultrasonic distance sensor
@@ -51,11 +53,17 @@ elec392/
 
 ## Software Requirements
 
-- Python 3.7+
-- Raspberry Pi OS (Bullseye)
+- Python 3.9+
+- Raspberry Pi OS (Bookworm)
 - See `requirements.txt` for Python dependencies
 
 ## Installation
+1. Create a new folder in your home directory called 'dev':
+   ```bash
+   cd ~
+   mkdir dev
+   cd dev
+   ```
 
 1. Clone the repository:
    ```bash
@@ -63,97 +71,109 @@ elec392/
    cd elec392
    ```
 
-2. Install Python dependencies:
+1. Install PiCar-X repos
    ```bash
-   pip install -r requirements.txt
+   sudo bash setup_picarx.sh 
    ```
 
-3. Download the object detection model for Coral USB Accelerator:
+1. Install Coral repos
    ```bash
-   mkdir -p models
-   cd models
-   wget https://github.com/google-coral/test_data/raw/master/ssd_mobilenet_v2_coco_quant_postprocess_edgetpu.tflite
-   wget https://github.com/google-coral/test_data/raw/master/coco_labels.txt
-   cd ..
+   sudo bash setup_coral.sh 
    ```
 
 ## Usage
 
-### Basic Vehicle Control
+### Running Example Scripts
 
-Test basic motor and servo control:
+All example scripts are located in the `examples/` directory. Run them from the repository root:
 
-```bash
-python examples/basic_control.py
-```
-
-### Lane Following
-
-Demonstrate lane following using camera vision or line tracking sensors:
+#### 1. Basic Movement (`01_move.py`)
+Tests all motors and servos: forward motion, steering, and camera pan/tilt.
 
 ```bash
-python examples/lane_following_demo.py
+python examples/01_move.py
 ```
 
-### Object Detection
+**What it does:**
+- Drives forward briefly
+- Sweeps steering servo left and right
+- Tests camera pan and tilt servos
 
-Test object detection with the Coral USB Accelerator:
+#### 2. Keyboard Control (`02_keyboard_control.py`)
+Drive the PiCar-X manually using keyboard input.
 
 ```bash
-python examples/object_detection_demo.py
+python examples/02_keyboard_control.py
 ```
 
-### Full Autonomous Taxi
+**Controls:**
+- `w` - Forward
+- `s` - Backward  
+- `a` - Turn left
+- `d` - Turn right
+- `i/k` - Camera tilt up/down
+- `j/l` - Camera pan left/right
+- `Ctrl+C` - Exit (press twice)
 
-Run the complete autonomous driving system:
+#### 3. Sound Effects (`03_sound.py`)
+Play sound effects and text-to-speech (requires sudo for audio).
 
 ```bash
-python examples/autonomous_taxi_demo.py
+sudo python examples/03_sound.py
 ```
 
-## Using the PiCar-X Library
+**Controls:**
+- `space` - Play car horn sound
+- `c` - Play sound in background thread
+- `t` - Text-to-speech greeting
+- `q` - Play/stop background music
 
-```python
-from picarx import PiCarX
+#### 4. Ultrasonic Obstacle Avoidance (`04_ultrasonic_obstacle_avoidance.py`)
+Autonomous obstacle avoidance using the ultrasonic distance sensor.
 
-# Initialize the car
-car = PiCarX()
-
-# Basic movement
-car.forward(speed=50)
-car.set_steering_angle(90)  # 90 is center, 45-135 range
-
-# Get sensor data
-distance = car.get_distance()  # Ultrasonic distance in cm
-line_pos = car.get_line_position()  # -1 (left), 0 (center), 1 (right)
-frame = car.capture_frame()  # Capture camera image
-
-# Cleanup when done
-car.cleanup()
+```bash
+python examples/04_ultrasonic_obstacle_avoidance.py
 ```
 
-## Autonomous Driving System
+**Behavior:**
+- Distance > 40cm: Drive straight
+- Distance 20-40cm: Turn to avoid
+- Distance < 20cm: Reverse and turn
 
-The autonomous taxi integrates multiple subsystems:
+#### 5. Line Following (`05_line_following.py`)
+Follow a dark line on a light background using grayscale sensors.
 
-1. **Lane Following**: Uses camera-based computer vision to detect lane lines and calculate steering angles
-2. **Object Detection**: Coral USB Accelerator runs MobileNet SSD for real-time object detection
-3. **Obstacle Avoidance**: Combines ultrasonic sensor and camera detections to avoid obstacles
-4. **Controller**: Main control loop that coordinates all systems
-
-```python
-from utils.autonomous_controller import AutonomousTaxi
-
-taxi = AutonomousTaxi(use_camera_vision=True, use_object_detection=True)
-taxi.run()  # Run indefinitely
-taxi.cleanup()
+```bash
+python examples/05_line_following.py
 ```
 
-## Development Notes
+**Note:** Requires grayscale sensor calibration first:
+```bash
+python utils/grayscale_calibration.py
+```
 
-- All hardware libraries include mock implementations for development/testing on non-Pi systems
-- The code is designed to work with or without actual hardware connected
-- Adjust PID constants and thresholds in the controller for your specific environment
+### Calibration Utilities
+
+Before using certain features, calibrate the sensors:
+
+```bash
+# Zero all servos to neutral position
+python utils/servo_zeroing.py
+
+# Calibrate motor speeds for straight driving
+python utils/actuator_calibration.py
+
+# Calibrate grayscale sensors for line following
+python utils/grayscale_calibration.py
+```
+
+### Logbook Activity Report
+
+Generate an activity report for your logbook entries:
+
+```bash
+python logbook/generate_activity_report.py . --output my-report.md
+```
 
 ## Contributing
 
@@ -167,4 +187,4 @@ See LICENSE file for details.
 
 **Course**: ELEC 392 - Engineering Design and Development
 **Institution**: Smith Engineering, Queen's University
-**Project**: Autonomous Robotic Taxi with PiCar-X 
+**Offering**: Winter 2026 
