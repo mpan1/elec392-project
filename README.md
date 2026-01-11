@@ -175,6 +175,38 @@ Generate an activity report for your logbook entries:
 python logbook/generate_activity_report.py . --output my-report.md
 ```
 
+### Student Code (src/)
+
+Teams should place all project-specific Python code in the `src/` folder. Keep modules organized by feature and use clear names. A minimal structure example:
+
+```
+src/
+├── __init__.py
+├── controllers/
+│   ├── __init__.py
+│   └── lane_follower.py
+└── sensors/
+   ├── __init__.py
+   └── ultrasonic.py
+```
+
+Import your code from example scripts or your own runners like this:
+
+```python
+# in examples/my_demo.py
+from src.controllers.lane_follower import LaneFollower
+from src.sensors.ultrasonic import UltrasonicSensor
+
+lf = LaneFollower()
+sensor = UltrasonicSensor()
+```
+
+Guidelines:
+- Group related code into subpackages (e.g., `controllers/`, `sensors/`, `planning/`).
+- Avoid placing team code in `examples/`; keep `examples/` for runnable demos.
+- Write small, testable modules; prefer functions/classes over monolithic scripts.
+- Add `__init__.py` in subfolders so imports work reliably.
+
 ## Contributing
 
 This is a course project repository. Contributions should follow the course guidelines and be coordinated with the instructor.
