@@ -4,6 +4,7 @@ date: YYYY-MM-DD
 week: X
 hours: X.X
 tags: [tag1, tag2, tag3]
+contributors: [Name1, Name2, Name3]
 ---
 
 # Meeting Minutes Template
