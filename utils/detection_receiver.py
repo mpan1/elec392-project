@@ -21,17 +21,28 @@ class DetectionReceiver:
         self.sock.settimeout(self.timeout)
 
         self.latest = None
+        self.packet_count = 0
+        self.last_debug_time = time.time()
 
     def update(self):
         """Attempt to receive new data (non-blocking-ish). Drains all pending packets."""
         received_any = False
+        packets_drained = 0
         while True:
             try:
                 data, _ = self.sock.recvfrom(65535)
                 self.latest = json.loads(data.decode("utf-8"))
                 received_any = True
+                packets_drained += 1
+                self.packet_count += 1
             except socket.timeout:
                 break
+        
+        # Debug: print packet reception rate every 5 seconds
+        if time.time() - self.last_debug_time >= 5.0:
+            print(f"[DEBUG] Received {self.packet_count} packets total, drained {packets_drained} this update")
+            self.last_debug_time = time.time()
+            
         return received_any
 
     def get_latest(self):
@@ -41,6 +52,8 @@ class DetectionReceiver:
 
         age = time.time() - self.latest["timestamp"]
         if age > self.stale_after:
+            # Debug: print why it's stale
+            print(f"[DEBUG] Data is stale: age={age:.2f}s, stale_after={self.stale_after}s, frame={self.latest.get('frame_id', '?')}")
             return None
 
         return self.latest
