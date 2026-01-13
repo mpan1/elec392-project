@@ -23,12 +23,16 @@ class DetectionReceiver:
         self.latest = None
 
     def update(self):
-        """Attempt to receive new data (non-blocking-ish)."""
-        try:
-            data, _ = self.sock.recvfrom(65535)
-            self.latest = json.loads(data.decode("utf-8"))
-        except socket.timeout:
-            pass
+        """Attempt to receive new data (non-blocking-ish). Drains all pending packets."""
+        received_any = False
+        while True:
+            try:
+                data, _ = self.sock.recvfrom(65535)
+                self.latest = json.loads(data.decode("utf-8"))
+                received_any = True
+            except socket.timeout:
+                break
+        return received_any
 
     def get_latest(self):
         """Return latest detections or None if stale/missing."""
