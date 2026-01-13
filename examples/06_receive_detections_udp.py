@@ -1,3 +1,8 @@
+import sys
+from pathlib import Path
+# Add parent directory to path so we can import utils module
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from utils.detection_receiver import DetectionReceiver
 from picarx import Picarx
 import time
