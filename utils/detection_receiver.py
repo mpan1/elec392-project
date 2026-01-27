@@ -21,8 +21,8 @@ class DetectionReceiver:
         self.sock.bind(self.addr)
         # Increase receive buffer to handle burst traffic
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 262144)
-            # Non-blocking for rapid draining
-            self.sock.setblocking(False)
+        # Non-blocking for rapid draining
+        self.sock.setblocking(False)
 
         self.latest = None
         self.packet_count = 0
@@ -35,9 +35,9 @@ class DetectionReceiver:
         while True:
             try:
                 data, _ = self.sock.recvfrom(65535)
-                except BlockingIOError:
-                    # Nothing waiting right now
-                    break
+            except BlockingIOError:
+                # Nothing waiting right now
+                break
             except OSError as e:
                 print(f"[DEBUG] socket error: {e}", flush=True)
                 break
