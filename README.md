@@ -74,14 +74,14 @@ elec392_project/
    cd elec392_project
    ```
 
-1. Install PiCar-X repos
-   ```bash
-   bash setup_picarx.sh 
-   ```
-
 1. Install Coral repos
    ```bash
    bash setup_coral.sh 
+   ```
+
+1. Install PiCar-X repos
+   ```bash
+   bash setup_picarx.sh 
    ```
 
 ## Usage
